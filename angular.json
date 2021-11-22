@@ -10,8 +10,8 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
+          "inlineTemplate": false,
+          "inlineStyle": false,
           "skipTests": true
         },
         "@schematics/angular:class": {
@@ -69,7 +69,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
