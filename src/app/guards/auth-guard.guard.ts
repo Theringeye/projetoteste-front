@@ -1,20 +1,20 @@
+import { AuthService } from "./../login/auth.service";
+import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from "@angular/router";
-import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthGuardGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
-  canActivate(
+  /*canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
@@ -27,6 +27,35 @@ export class AuthGuardGuard implements CanActivate {
       return false;
     }
 
-    return true;
+    return false;
+  }*/
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | boolean {
+    
+    //if(this.authService.isUserLogado){
+      console.log(
+        "passou pela condição islogado");
+    const token = window.localStorage.getItem("token");
+
+    if (token) {
+      console.log(
+        "está passando pelo guard varias vezes e recuperando o token: " + token);
+      
+      if(this.authService.isTokenExpired(token)){
+        console.log(
+          "token expirou - nova validação dentro authguard: " + token);
+        this.router.navigate(["/login"]);
+        return false;
+      }
+
+      return true;
+      }else {
+      console.log("passou pelo guard - não ta autenticado ou token expirou");
+      this.router.navigate(["/login"]);
+      return false;
+    }
   }
 }
