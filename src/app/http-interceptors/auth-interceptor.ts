@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.authService.getAutorizacaoToken();
 
-
+   //teste
 
     console.log("passou pelo interceptor");
 
